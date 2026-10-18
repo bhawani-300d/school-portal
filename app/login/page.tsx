@@ -27,22 +27,20 @@ export default function LoginPage() {
     );
 
     if (!matchedUser) {
-      setError('Invalid email/password for selected role.');
+      setError('Invalid email or password for selected role.');
       return;
     }
 
     localStorage.setItem('currentUser', JSON.stringify(matchedUser));
-    if (role === 'admin') {
-      router.push('/admin/class10');
-      return;
-    }
-    router.push('/student/class10');
+    router.push(role === 'admin' ? '/admin/class10' : '/student/class10');
   };
 
   return (
     <main className="page-shell centered">
       <section className="auth-card">
-        <h1>School Login</h1>
+        <p className="eyebrow">School Portal</p>
+        <h1>Login</h1>
+
         <div className="segmented">
           <button
             className={role === 'admin' ? 'segment active' : 'segment'}

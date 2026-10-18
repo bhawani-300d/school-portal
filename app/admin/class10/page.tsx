@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { SchoolData, Subject, VideoItem, NoteItem, LiveClassItem, ScheduleItem, FeeItem } from '@/lib/schoolData';
+import { SchoolData } from '@/lib/schoolData';
 
 export default function AdminClass10Page() {
   const router = useRouter();
@@ -33,6 +33,9 @@ export default function AdminClass10Page() {
   }, [router]);
 
   const class10Subjects = useMemo(() => data.subjects.filter((s: any) => s.classId === 'class10'), [data]);
+  const filteredNotes = data.notes.filter((item: any) => item.classId === 'class10' && item.subject === selectedSubject && item.medium === selectedMedium);
+  const filteredVideos = data.videos.filter((item: any) => item.classId === 'class10' && item.subject === selectedSubject && item.medium === selectedMedium);
+  const pendingFees = data.fees.filter((fee: any) => fee.status !== 'Paid');
 
   const saveData = (next: any) => {
     localStorage.setItem('schoolPortalData', JSON.stringify(next));
@@ -113,8 +116,6 @@ export default function AdminClass10Page() {
     saveData(next);
   };
 
-  const pendingFees = data.fees.filter((fee: any) => fee.status !== 'Paid');
-
   return (
     <main className="page-shell">
       <header className="topbar">
@@ -128,10 +129,10 @@ export default function AdminClass10Page() {
       </header>
 
       <section className="summary-grid">
-        <div className="mini-card">{pendingFees.length} Pending Fees</div>
-        <div className="mini-card">{data.liveClasses.length} Live Classes</div>
-        <div className="mini-card">{data.videos.length} Videos</div>
-        <div className="mini-card">{data.notes.length} Notes</div>
+        <div className="mini-card"><strong>{pendingFees.length}</strong><span>Pending Fees</span></div>
+        <div className="mini-card"><strong>{data.liveClasses.length}</strong><span>Live Classes</span></div>
+        <div className="mini-card"><strong>{data.videos.length}</strong><span>Videos</span></div>
+        <div className="mini-card"><strong>{data.notes.length}</strong><span>Notes</span></div>
       </section>
 
       <section className="split-layout">
@@ -188,6 +189,7 @@ export default function AdminClass10Page() {
 
         <div className="panel-card">
           <h2>Schedule & Live Class</h2>
+
           <div className="card-group">
             <h3>Add Schedule</h3>
             <div className="form-group">
@@ -246,31 +248,27 @@ export default function AdminClass10Page() {
 
       <section className="info-grid">
         <div className="mini-card">
-          <h3>Uploaded Notes</h3>
+          <h3>Notes</h3>
           <ul>
-            {data.notes
-              .filter((item: any) => item.classId === 'class10' && item.subject === selectedSubject && item.medium === selectedMedium)
-              .slice(0, 5)
-              .map((item: any) => (
-                <li key={item.id}>{item.title}</li>
-              ))}
+            {filteredNotes.slice(0, 5).map((item: any) => (
+              <li key={item.id}>{item.title}</li>
+            ))}
           </ul>
         </div>
+
         <div className="mini-card">
-          <h3>Uploaded Videos</h3>
+          <h3>Videos</h3>
           <ul>
-            {data.videos
-              .filter((item: any) => item.classId === 'class10' && item.subject === selectedSubject && item.medium === selectedMedium)
-              .slice(0, 5)
-              .map((item: any) => (
-                <li key={item.id}>{item.title}</li>
-              ))}
+            {filteredVideos.slice(0, 5).map((item: any) => (
+              <li key={item.id}>{item.title}</li>
+            ))}
           </ul>
         </div>
+
         <div className="mini-card">
-          <h3>Fee Status</h3>
+          <h3>Fees</h3>
           <ul>
-            {data.fees.slice(0, 5).map((fee: any) => (
+            {pendingFees.slice(0, 5).map((fee: any) => (
               <li key={fee.id}>{fee.studentName}: {fee.status}</li>
             ))}
           </ul>

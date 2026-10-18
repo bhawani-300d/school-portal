@@ -25,7 +25,6 @@ export default function StudentClass10Page() {
   }, [router]);
 
   const class10Subjects = useMemo(() => data.subjects.filter((item: any) => item.classId === 'class10'), [data]);
-
   const notes = data.notes.filter((item: any) => item.classId === 'class10' && item.medium === selectedMedium);
   const videos = data.videos.filter((item: any) => item.classId === 'class10' && item.medium === selectedMedium);
   const schedules = data.schedules.filter((item: any) => item.classId === 'class10' && item.medium === selectedMedium);
@@ -51,19 +50,17 @@ export default function StudentClass10Page() {
       </header>
 
       <section className="summary-grid">
-        <div className="mini-card">Student: {currentUser?.name || 'Student'}</div>
-        <div className="mini-card">Fees: {studentFee?.status || 'Pending'}</div>
-        <div className="mini-card">{liveClasses.length} Live Classes</div>
-        <div className="mini-card">{notes.length} Notes</div>
+        <div className="mini-card"><strong>{currentUser?.name || 'Student'}</strong><span>Student</span></div>
+        <div className="mini-card"><strong>{studentFee?.status || 'Pending'}</strong><span>Fee Status</span></div>
+        <div className="mini-card"><strong>{liveClasses.length}</strong><span>Live Classes</span></div>
+        <div className="mini-card"><strong>{notes.length}</strong><span>Notes</span></div>
       </section>
 
       <section className="subject-grid">
         {class10Subjects.map((subject: any) => (
           <div key={subject.id} className="subject-card">
             <h3>{subject.name}</h3>
-            <div className="subject-meta">
-              <span>{selectedMedium} Medium</span>
-            </div>
+            <div className="subject-meta">{selectedMedium} Medium</div>
             <div className="stack-list">
               {notes
                 .filter((item: any) => item.subject === subject.name)

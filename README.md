@@ -6,13 +6,13 @@ School portal starter app for admin and student login with Class 10 study resour
 - Admin login
 - Student login
 - Class 10 panel with 6 subjects
-- Hindi/English medium
-- Notes upload
-- Video upload
-- Class schedule
-- Live classes
-- Fees management
-- Local persistence with browser localStorage
+- Hindi/English medium support
+- Notes management
+- Video management
+- Schedule management
+- Live class management
+- Fee tracking
+- Demo data stored in browser localStorage
 
 ## Default admin login
 - Email: bhawanishankarjoshi300@gmail.com
@@ -36,4 +36,4 @@ Then open: http://localhost:3000
 - `/student/class10` - student view for Class 10
 
 ## Notes
-This project is a functional starter. It uses browser localStorage to keep data between refreshes. For production, replace with a real database and auth provider.
+This is a working starter for demo and iteration. For production, replace localStorage with a database and secure auth provider.
